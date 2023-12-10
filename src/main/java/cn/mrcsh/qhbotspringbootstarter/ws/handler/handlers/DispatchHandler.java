@@ -32,7 +32,7 @@ public class DispatchHandler extends AbstractMessageHandler {
                 WebSocketMessageModule<BotInfo> botinfo = (WebSocketMessageModule<BotInfo>) data;
                 Cache.botInfo = botinfo.getD();
                 BotLoginSuccessfulEvent botLoginSuccessfulEvent = new BotLoginSuccessfulEvent();
-                invokeEvent(type,botLoginSuccessfulEvent);
+                invokeEvent(type, botLoginSuccessfulEvent);
                 break;
             case "AT_MESSAGE_CREATE":
                 data = JSON.parseObject(s, new TypeReference<WebSocketMessageModule<Message>>() {
@@ -133,7 +133,16 @@ public class DispatchHandler extends AbstractMessageHandler {
                 directMessageEvent.setMessage(directMessage.getD());
                 invokeEvent(type, directMessageEvent);
                 break;
+            case "GROUP_AT_MESSAGE_CREATE":
+                data = JSON.parseObject(s, new TypeReference<WebSocketMessageModule<GroupMessage>>() {
+                });
+                WebSocketMessageModule<GroupMessage> groupMessage = (WebSocketMessageModule<GroupMessage>) data;
+                GroupAtMessageEvent groupAtMessageEvent = new GroupAtMessageEvent();
+                groupAtMessageEvent.setMessage(groupMessage.getD());
+                invokeEvent(type, groupAtMessageEvent);
+                break;
             default:
+                System.out.println("null");
                 break;
         }
     }
@@ -142,7 +151,7 @@ public class DispatchHandler extends AbstractMessageHandler {
     public void invokeEvent(String type, AbstractEvent event) {
         try {
             List<EventMethodModule> atMessageCreate = Cache.methodMapping.get(EventTypes.getType(type));
-            if(atMessageCreate != null){
+            if (atMessageCreate != null) {
                 for (EventMethodModule methodModule : atMessageCreate) {
                     methodModule.getMethod().invoke(methodModule.getObj(), event);
                 }

@@ -1,12 +1,13 @@
 package cn.mrcsh.qhbotspringbootstarter.banner;
 
 import cn.mrcsh.qhbotspringbootstarter.annotation.EventHandler;
-import cn.mrcsh.qhbotspringbootstarter.annotation.QHBot;
+import cn.mrcsh.qhbotspringbootstarter.annotation.ZFBot;
 import cn.mrcsh.qhbotspringbootstarter.config.Cache;
 import cn.mrcsh.qhbotspringbootstarter.config.Const;
 import cn.mrcsh.qhbotspringbootstarter.config.QQBotProperty;
 import cn.mrcsh.qhbotspringbootstarter.module.EventMethodModule;
 import cn.mrcsh.qhbotspringbootstarter.module.enums.EventTypes;
+import cn.mrcsh.qhbotspringbootstarter.ws.task.AccessTokenTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,9 @@ public class banner {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private AccessTokenTask accessTokenTask;
+
     public final String banner = "======================================================\n" +
             "                                                      \n" +
             " _____ _____    _____                       _     _   \n" +
@@ -49,15 +53,18 @@ public class banner {
     }
 
     public void initialize(){
-        Const.baseURL = property.isDev() ? "https://sandbox.api.sgroup.qq.com" : "https://api.sgroup.qq.com";
+        Const.OPENAPI = property.isDev() ? "https://sandbox.api.sgroup.qq.com" : "https://api.sgroup.qq.com";
         Const.token = String.format("Bot %s.%s", property.getBotAppId(), property.getBotToken());
         Const.heartLog = property.isHeartbeat();
         Const.intents = property.getIntents();
         mappingMethods();
+        Cache.property = property;
+        new Thread(accessTokenTask, "update access-token task").start();
+
     }
 
     public void mappingMethods() {
-        Map<String, Object> beansWithAnnotation = context.getBeansWithAnnotation(QHBot.class);
+        Map<String, Object> beansWithAnnotation = context.getBeansWithAnnotation(ZFBot.class);
         for (Map.Entry<String, Object> entry : beansWithAnnotation.entrySet()) {
             for (Method method : entry.getValue().getClass().getDeclaredMethods()) {
                 EventHandler annotation = method.getAnnotation(EventHandler.class);

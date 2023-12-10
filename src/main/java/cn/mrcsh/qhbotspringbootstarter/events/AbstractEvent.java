@@ -8,8 +8,8 @@ import cn.mrcsh.qhbotspringbootstarter.ws.message.send.message.base.BaseMessage;
  * @Date: 2023/9/28 14:53
  * @Author: Virus_Cui
  */
-public abstract class AbstractEvent {
-    public abstract void send(BaseMessage message);
+public abstract class AbstractEvent<T extends BaseMessage> {
+    public abstract void send(T t);
 
     public BaseMessage copyValue(BaseMessage from, BaseMessage to) throws IllegalAccessException {
         ReflectUtil.copyProperties(from, to);

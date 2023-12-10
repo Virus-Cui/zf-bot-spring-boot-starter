@@ -5,7 +5,9 @@ package cn.mrcsh.qhbotspringbootstarter.config;
  * @Author: Virus_Cui
  */
 public class Const {
-    public static String baseURL = "";
+    public static String OPENAPI = "";
+    public static String ACCESSURL = "https://bots.qq.com/";
+    public static String accessToken = "";
     public static String token = "";
     public static boolean heartLog = false;
     public static int intents = 0;

@@ -14,8 +14,8 @@ import java.util.Map;
 public class Cache {
     // 最后一个信息的id
     public static Long lastMessageId = null;
-
     public static Map<String, List<EventMethodModule>> methodMapping = new LinkedHashMap<>();
-
     public static BotInfo botInfo = null;
+
+    public static QQBotProperty property = null;
 }

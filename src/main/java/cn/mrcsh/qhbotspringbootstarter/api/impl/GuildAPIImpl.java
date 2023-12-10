@@ -3,7 +3,6 @@ package cn.mrcsh.qhbotspringbootstarter.api.impl;
 import cn.mrcsh.qhbotspringbootstarter.api.GuildAPI;
 import cn.mrcsh.qhbotspringbootstarter.module.apimoudle.Guild;
 import cn.mrcsh.qhbotspringbootstarter.utils.XHttp;
-import cn.mrcsh.qhbotspringbootstarter.utils.XJson;
 import com.alibaba.fastjson2.JSON;
 import org.springframework.stereotype.Service;
 

@@ -20,6 +20,7 @@ public enum EventTypes {
     GUILD_MEMBER_UPDATE("GUILD_MEMBER_UPDATE", GuildMemberUpdateEvent.class),
     GUILD_MEMBER_REMOVE("GUILD_MEMBER_REMOVE", GuildMemberRemoveEvent.class),
     DIRECT_MESSAGE_CREATE("DIRECT_MESSAGE_CREATE", DirectMessageEvent.class),
+    GROUP_AT_MESSAGE_CREATE("GROUP_AT_MESSAGE_CREATE", GroupAtMessageEvent.class),
     ;
 
     public String getName() {
